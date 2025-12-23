@@ -1,11 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Task } from './types/Task';
 import TaskList from './components/TaskList.tsx';
 import TaskModal from './components/TaskModal.tsx';
 import InfosModal from './components/InfosModal.tsx';
 
 function App() {
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<Task[]>(() => {
+        const storedTasks = localStorage.getItem('tasks');
+
+        if (!storedTasks) return [];
+
+        try {
+            return JSON.parse(storedTasks);
+        } catch (error) {
+            console.error('Erro ao ler tasks do localStorage', error);
+            return [];
+        }
+    });
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+
     const [task, setTask] = useState<Task | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isInfosModalOpen, setIsInfosModalOpen] = useState<boolean>(false);
@@ -49,12 +65,14 @@ function App() {
     }
 
     function removeTask(id: number) {
+        closeInfosModal();
         setTasks(tasks.filter((task) => task.id !== id));
     }
 
     function editTask(task: Task) {
-        setTask(task);
+        closeInfosModal();
         openModal();
+        setTask(task);
     }
 
     return (
@@ -89,6 +107,8 @@ function App() {
                 <InfosModal
                     isOpen={isInfosModalOpen}
                     onClose={closeInfosModal}
+                    editTask={editTask}
+                    removeTask={removeTask}
                     task={task}
                 ></InfosModal>
             </div>
