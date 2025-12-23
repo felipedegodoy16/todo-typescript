@@ -44,12 +44,18 @@ function App() {
         setIsInfosModalOpen(false);
     }
 
-    function addTask(id: number, text: string, description: string) {
+    function addTask(
+        id: number,
+        text: string,
+        description: string,
+        concluded: boolean
+    ) {
         if (id === -1) {
             const newTask: Task = {
                 id: Date.now(),
                 text,
                 description,
+                concluded,
             };
 
             setTasks([...tasks, newTask]);
@@ -58,10 +64,20 @@ function App() {
                 id,
                 text,
                 description,
+                concluded,
             };
 
             setTasks(tasks.map((task) => (task.id === id ? newTask : task)));
         }
+    }
+
+    function concludeTask(id: number) {
+        closeInfosModal();
+        setTasks(
+            tasks.map((task) =>
+                task.id === id ? { ...task, concluded: !task.concluded } : task
+            )
+        );
     }
 
     function removeTask(id: number) {
@@ -92,7 +108,7 @@ function App() {
                 <TaskList
                     tasks={tasks}
                     removeTask={removeTask}
-                    editTask={editTask}
+                    concludeTask={concludeTask}
                     openInfosModal={openInfosModal}
                 />
 

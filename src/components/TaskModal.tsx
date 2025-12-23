@@ -3,7 +3,12 @@ import type { Task } from '../types/Task';
 
 interface TaskModalProps {
     onClose: () => void;
-    onAddTask: (id: number, text: string, description: string) => void;
+    onAddTask: (
+        id: number,
+        text: string,
+        description: string,
+        concluded: boolean
+    ) => void;
     task: Task | null;
 }
 
@@ -13,13 +18,14 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
         task?.description ?? ''
     );
     const id = task?.id ?? -1;
+    const concluded = task?.concluded ?? false;
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
         if (!text.trim()) return;
 
-        onAddTask(id, text, description);
+        onAddTask(id, text, description, concluded);
         setText('');
         setDescription('');
         onClose();
