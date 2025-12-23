@@ -11,6 +11,7 @@ function App() {
     const [isInfosModalOpen, setIsInfosModalOpen] = useState<boolean>(false);
 
     function openModal() {
+        setTask(null);
         setIsModalOpen(true);
     }
 
@@ -27,23 +28,38 @@ function App() {
         setIsInfosModalOpen(false);
     }
 
-    function addTask(text: string, description: string) {
-        const newTask: Task = {
-            id: Date.now(),
-            text,
-            description,
-        };
+    function addTask(id: number, text: string, description: string) {
+        if (id === -1) {
+            const newTask: Task = {
+                id: Date.now(),
+                text,
+                description,
+            };
 
-        setTasks([...tasks, newTask]);
+            setTasks([...tasks, newTask]);
+        } else {
+            const newTask: Task = {
+                id,
+                text,
+                description,
+            };
+
+            setTasks(tasks.map((task) => (task.id === id ? newTask : task)));
+        }
     }
 
     function removeTask(id: number) {
         setTasks(tasks.filter((task) => task.id !== id));
     }
 
+    function editTask(task: Task) {
+        setTask(task);
+        openModal();
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md m-4">
                 <h1 className="text-2xl font-bold mb-4 text-center">
                     Lista de Tarefas
                 </h1>
@@ -58,14 +74,17 @@ function App() {
                 <TaskList
                     tasks={tasks}
                     removeTask={removeTask}
+                    editTask={editTask}
                     openInfosModal={openInfosModal}
                 />
 
-                <TaskModal
-                    isOpen={isModalOpen}
-                    onClose={closeModal}
-                    onAddTask={addTask}
-                ></TaskModal>
+                {isModalOpen && (
+                    <TaskModal
+                        onClose={closeModal}
+                        onAddTask={addTask}
+                        task={task}
+                    />
+                )}
 
                 <InfosModal
                     isOpen={isInfosModalOpen}

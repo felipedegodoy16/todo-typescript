@@ -1,23 +1,25 @@
 import { useState } from 'react';
+import type { Task } from '../types/Task';
 
 interface TaskModalProps {
-    isOpen: boolean;
     onClose: () => void;
-    onAddTask: (text: string, description: string) => void;
+    onAddTask: (id: number, text: string, description: string) => void;
+    task: Task | null;
 }
 
-function TaskModal({ isOpen, onClose, onAddTask }: TaskModalProps) {
-    const [text, setText] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-
-    if (!isOpen) return null;
+function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
+    const [text, setText] = useState<string>(task?.text ?? '');
+    const [description, setDescription] = useState<string>(
+        task?.description ?? ''
+    );
+    const id = task?.id ?? -1;
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
         if (!text.trim()) return;
 
-        onAddTask(text, description);
+        onAddTask(id, text, description);
         setText('');
         setDescription('');
         onClose();
@@ -32,7 +34,7 @@ function TaskModal({ isOpen, onClose, onAddTask }: TaskModalProps) {
                 }
             }}
         >
-            <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg">
+            <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg m-4">
                 <h2 className="text-xl font-bold mb-4">Nova Tarefa</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">

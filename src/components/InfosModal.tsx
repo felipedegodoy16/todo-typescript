@@ -19,7 +19,7 @@ function InfosModal({ isOpen, onClose, task }: InfosModalProps) {
                 }
             }}
         >
-            <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg">
+            <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg m-4">
                 <h2 className="text-xl font-bold mb-4 text-center">
                     {task.text}
                 </h2>
