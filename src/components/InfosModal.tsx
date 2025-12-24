@@ -30,7 +30,21 @@ function InfosModal({
             <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg m-4 grid gap-5">
                 <h2 className="text-xl font-bold text-center">{task.text}</h2>
 
-                <p className="text-center">{task.description}</p>
+                <div className="grid gap-2 border-t pt-5 border-b pb-5 border-gray-300">
+                    <p>Descrição: {task.description}</p>
+                    <p>Criada em: {task.createdAt}</p>
+                    <p>
+                        {task.concluded ? (
+                            <span className="text-sky-950 bg-sky-400 py-1 px-2 rounded">
+                                Concluída
+                            </span>
+                        ) : (
+                            <span className="text-green-950 bg-green-400 py-1 px-2 rounded">
+                                Aberta
+                            </span>
+                        )}
+                    </p>
+                </div>
 
                 <div className="flex justify-end gap-2">
                     <button
@@ -39,12 +53,14 @@ function InfosModal({
                     >
                         Fechar
                     </button>
-                    <button
-                        onClick={() => editTask(task)}
-                        className="bg-yellow-500 text-yellow-950 rounded-lg py-2 px-4 hover:bg-yellow-700 transition-all cursor-pointer"
-                    >
-                        Editar
-                    </button>
+                    {!task.concluded && (
+                        <button
+                            onClick={() => editTask(task)}
+                            className="bg-yellow-500 text-yellow-950 rounded-lg py-2 px-4 hover:bg-yellow-700 transition-all cursor-pointer"
+                        >
+                            Editar
+                        </button>
+                    )}
                     <button
                         onClick={() => removeTask(task.id)}
                         className="bg-red-600 text-red-950 rounded-lg py-2 px-4 hover:bg-red-700 transition-all cursor-pointer"

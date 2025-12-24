@@ -56,6 +56,7 @@ function App() {
                 text,
                 description,
                 concluded,
+                createdAt: new Date().toLocaleString('pt-BR'),
             };
 
             setTasks([...tasks, newTask]);
@@ -65,6 +66,7 @@ function App() {
                 text,
                 description,
                 concluded,
+                createdAt: new Date().toLocaleString('pt-BR'),
             };
 
             setTasks(tasks.map((task) => (task.id === id ? newTask : task)));
@@ -75,7 +77,24 @@ function App() {
         closeInfosModal();
         setTasks(
             tasks.map((task) =>
-                task.id === id ? { ...task, concluded: !task.concluded } : task
+                task.id === id
+                    ? {
+                          ...task,
+                          concluded: !task.concluded,
+                          concludedAt: new Date().toLocaleString('pt-BR'),
+                      }
+                    : task
+            )
+        );
+    }
+
+    function reOpenTask(id: number) {
+        closeInfosModal();
+        setTasks(
+            tasks.map((task) =>
+                task.id === id
+                    ? { ...task, concluded: false, concludedAt: '' }
+                    : task
             )
         );
     }
@@ -100,7 +119,7 @@ function App() {
 
                 <button
                     onClick={openModal}
-                    className="w-full mb-4 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+                    className="w-full mb-4 bg-blue-600 text-blue-100 py-2 rounded-lg hover:bg-blue-700 transition-all cursor-pointer"
                 >
                     Nova Tarefa
                 </button>
@@ -108,6 +127,7 @@ function App() {
                 <TaskList
                     tasks={tasks}
                     removeTask={removeTask}
+                    reOpenTask={reOpenTask}
                     concludeTask={concludeTask}
                     openInfosModal={openInfosModal}
                 />

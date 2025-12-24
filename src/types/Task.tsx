@@ -3,4 +3,6 @@ export interface Task {
     text: string;
     description: string;
     concluded: boolean;
+    createdAt: string;
+    concludedAt?: string;
 }
