@@ -1,129 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { Task } from './types/Task';
 import TaskList from './components/TaskList.tsx';
 import TaskModal from './components/TaskModal.tsx';
 import InfosModal from './components/InfosModal.tsx';
+import { useTasks } from './hooks/useTasks.ts';
+import { useModal } from './hooks/useModal.ts';
 
 function App() {
-    const [tasks, setTasks] = useState<Task[]>(() => {
-        const storedTasks = localStorage.getItem('tasks');
-
-        if (!storedTasks) return [];
-
-        try {
-            return JSON.parse(storedTasks);
-        } catch (error) {
-            console.error('Erro ao ler tasks do localStorage', error);
-            return [];
-        }
-    });
-
-    useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }, [tasks]);
-
+    const [tasks, addTask, removeTask, concludeTask, reOpenTask] = useTasks();
+    const [isModalOpen, changeModalState] = useModal();
+    const [isInfosModalOpen, changeInfosModalState] = useModal();
     const [task, setTask] = useState<Task | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [isInfosModalOpen, setIsInfosModalOpen] = useState<boolean>(false);
 
     function openModal() {
+        if (!isModalOpen) changeModalState();
         setTask(null);
-        setIsModalOpen(true);
-    }
-
-    function closeModal() {
-        setIsModalOpen(false);
     }
 
     function openInfosModal(task: Task) {
-        setIsInfosModalOpen(true);
+        if (!isInfosModalOpen) changeInfosModalState();
         setTask(task);
     }
 
-    function closeInfosModal() {
-        setIsInfosModalOpen(false);
-    }
-
-    function addTask(
-        id: number,
-        text: string,
-        description: string,
-        concluded: boolean
-    ) {
-        if (id === -1) {
-            const newTask: Task = {
-                id: Date.now(),
-                text,
-                description,
-                concluded,
-                createdAt: new Date().toLocaleString('pt-BR'),
-            };
-
-            setTasks([...tasks, newTask]);
-        } else {
-            const newTask: Task = {
-                id,
-                text,
-                description,
-                concluded,
-                createdAt: new Date().toLocaleString('pt-BR'),
-            };
-
-            setTasks(tasks.map((task) => (task.id === id ? newTask : task)));
-        }
-    }
-
-    function concludeTask(id: number) {
-        closeInfosModal();
-        setTasks(
-            tasks.map((task) =>
-                task.id === id
-                    ? {
-                          ...task,
-                          concluded: !task.concluded,
-                          concludedAt: new Date().toLocaleString('pt-BR'),
-                      }
-                    : task
-            )
-        );
-    }
-
-    function reOpenTask(id: number) {
-        closeInfosModal();
-        setTasks(
-            tasks.map((task) =>
-                task.id === id
-                    ? { ...task, concluded: false, concludedAt: '' }
-                    : task
-            )
-        );
-    }
-
-    function removeTask(id: number) {
-        closeInfosModal();
-        setTasks(tasks.filter((task) => task.id !== id));
-    }
+    // function removeTask(id: number) {
+    //     closeInfosModal();
+    //     setTasks(tasks.filter((task) => task.id !== id));
+    // }
 
     function editTask(task: Task) {
-        closeInfosModal();
-        openModal();
+        if (isInfosModalOpen) changeInfosModalState();
+        if (!isModalOpen) changeModalState();
         setTask(task);
     }
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md m-4">
-                <h1 className="text-2xl font-bold mb-4 text-center">
-                    Lista de Tarefas
-                </h1>
+            <div className="w-full flex items-center justify-between absolute top-0 py-4 px-4">
+                <h1 className="text-2xl font-bold text-center">To-Do List</h1>
 
                 <button
                     onClick={openModal}
-                    className="w-full mb-4 bg-blue-600 text-blue-100 py-2 rounded-lg hover:bg-blue-700 transition-all cursor-pointer"
+                    className="bg-blue-600 text-blue-100 py-2 px-4 rounded-lg hover:bg-blue-700 transition-all cursor-pointer"
                 >
                     Nova Tarefa
                 </button>
+            </div>
 
+            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md m-4">
                 <TaskList
                     tasks={tasks}
                     removeTask={removeTask}
@@ -134,7 +57,7 @@ function App() {
 
                 {isModalOpen && (
                     <TaskModal
-                        onClose={closeModal}
+                        onClose={changeModalState}
                         onAddTask={addTask}
                         task={task}
                     />
@@ -142,7 +65,7 @@ function App() {
 
                 <InfosModal
                     isOpen={isInfosModalOpen}
-                    onClose={closeInfosModal}
+                    onClose={changeInfosModalState}
                     editTask={editTask}
                     removeTask={removeTask}
                     task={task}
