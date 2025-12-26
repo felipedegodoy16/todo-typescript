@@ -7,6 +7,7 @@ interface TaskModalProps {
         id: number,
         text: string,
         description: string,
+        limitDate: string,
         concluded: boolean
     ) => void;
     task: Task | null;
@@ -17,6 +18,7 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
     const [description, setDescription] = useState<string>(
         task?.description ?? ''
     );
+    const [limitDate, setLimitDate] = useState<string>(task?.limitDate ?? '');
     const id = task?.id ?? -1;
     const concluded = task?.concluded ?? false;
 
@@ -25,7 +27,7 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
 
         if (!text.trim()) return;
 
-        onAddTask(id, text, description, concluded);
+        onAddTask(id, text, description, limitDate, concluded);
         setText('');
         setDescription('');
         onClose();
@@ -64,6 +66,18 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
                             placeholder="Digite a descrição"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    <div className="flex flex-col mb-2">
+                        <label htmlFor="limitDate">Data Limite</label>
+                        <input
+                            id="limitDate"
+                            type="date"
+                            placeholder="Digite a data limite"
+                            value={limitDate}
+                            onChange={(e) => setLimitDate(e.target.value)}
                             className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>

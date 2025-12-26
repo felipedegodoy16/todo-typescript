@@ -35,18 +35,16 @@ function App() {
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="w-full flex items-center justify-between absolute top-0 py-4 px-4">
+            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md m-4 grid gap-4">
                 <h1 className="text-2xl font-bold text-center">To-Do List</h1>
 
                 <button
                     onClick={openModal}
-                    className="bg-blue-600 text-blue-100 py-2 px-4 rounded-lg hover:bg-blue-700 transition-all cursor-pointer"
+                    className="bg-blue-600 text-blue-50 py-2 rounded-lg hover:bg-blue-700 transition-bg duration-200 cursor-pointer"
                 >
                     Nova Tarefa
                 </button>
-            </div>
 
-            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md m-4">
                 <TaskList
                     tasks={tasks}
                     removeTask={removeTask}
