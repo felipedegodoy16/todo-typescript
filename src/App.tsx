@@ -49,6 +49,7 @@ function App() {
                     tasks={tasks}
                     removeTask={removeTask}
                     reOpenTask={reOpenTask}
+                    editTask={editTask}
                     concludeTask={concludeTask}
                     openInfosModal={openInfosModal}
                 />

@@ -2,7 +2,7 @@ export interface Task {
     id: number;
     text: string;
     description: string;
-    limitDate: string;
+    priority: string;
     concluded: boolean;
     createdAt: string;
     concludedAt?: string;

@@ -28,15 +28,35 @@ function InfosModal({
             }}
         >
             <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg m-4 grid gap-5">
-                <h2 className="text-gray-800 text-xl font-bold text-center">
-                    {task.text}
+                <h2 className="text-gray-800 text-xl font-bold text-center flex items-center gap-2">
+                    {task.priority === 'high' ? (
+                        <span className="w-3 h-3 bg-red-500 rounded-full"></span>
+                    ) : task.priority === 'medium' ? (
+                        <span className="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                    ) : (
+                        <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+                    )}
+                    {task.concluded ? (
+                        <span className="font-bold line-through text-gray-400">
+                            {task.text}
+                        </span>
+                    ) : (
+                        <span className="font-bold text-gray-700">
+                            {task.text}
+                        </span>
+                    )}
                 </h2>
 
                 <div className="grid gap-2 border-t pt-5 border-b pb-5 border-gray-300">
-                    <p>Descrição: {task.description}</p>
-                    <p>Criada em: {task.createdAt}</p>
-                    <p>Limite: {task.limitDate}</p>
-                    {task.concluded && <p>Concluída em: {task.concludedAt}</p>}
+                    <p className="text-gray-700">
+                        Descrição: {task.description}
+                    </p>
+                    <p className="text-gray-700">Criada em: {task.createdAt}</p>
+                    {task.concluded && (
+                        <p className="text-gray-700">
+                            Concluída em: {task.concludedAt}
+                        </p>
+                    )}
                     <p>
                         {task.concluded ? (
                             <span className="text-sky-950 bg-sky-400 py-1 px-2 rounded">

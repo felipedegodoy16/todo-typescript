@@ -10,7 +10,7 @@ export function useTasks() {
         id: number,
         text: string,
         description: string,
-        limitDate: string,
+        priority: string,
         concluded: boolean
     ) {
         if (id === -1) {
@@ -18,7 +18,7 @@ export function useTasks() {
                 id: Date.now(),
                 text,
                 description,
-                limitDate,
+                priority,
                 concluded,
                 createdAt: new Date().toLocaleString('pt-BR'),
             };
@@ -29,7 +29,7 @@ export function useTasks() {
                 id,
                 text,
                 description,
-                limitDate,
+                priority,
                 concluded,
                 createdAt: new Date().toLocaleString('pt-BR'),
             };
