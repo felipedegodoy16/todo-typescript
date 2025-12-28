@@ -99,8 +99,10 @@ function InfosModal({
                                 confirm(
                                     'Tem certeza que deseja excluir esta tarefa?'
                                 )
-                            )
+                            ) {
                                 removeTask(task.id);
+                                onClose();
+                            }
                         }}
                         className="bg-red-600 rounded-lg py-2 px-2 hover:bg-red-700 transition-bg duration-200 cursor-pointer"
                     >

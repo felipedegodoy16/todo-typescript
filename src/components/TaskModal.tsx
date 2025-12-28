@@ -18,21 +18,19 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
     const [description, setDescription] = useState<string>(
         task?.description ?? ''
     );
-    const [priority, setPriority] = useState<string>(task?.priority ?? 'Baixa');
+    const [priority, setPriority] = useState<string>(task?.priority ?? 'down');
     const id = task?.id ?? -1;
     const concluded = task?.concluded ?? false;
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        console.log(priority);
-
         if (!text.trim()) return;
 
         onAddTask(id, text, description, priority, concluded);
         setText('');
         setDescription('');
-        setPriority('');
+        setPriority('down');
         onClose();
     }
 
