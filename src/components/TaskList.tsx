@@ -2,6 +2,7 @@ import type { Task } from '../types/Task';
 
 interface TaskListProps {
     tasks: Task[];
+    searchFilter: string;
     priorityFilter: string;
     statusFilter: string;
     concludeTask: (id: number) => void;
@@ -13,6 +14,7 @@ interface TaskListProps {
 
 function TaskList({
     tasks,
+    searchFilter,
     priorityFilter,
     statusFilter,
     concludeTask,
@@ -32,6 +34,12 @@ function TaskList({
     return (
         <ul className="space-y-2">
             {tasks
+                .filter((task) => {
+                    if (searchFilter === '') return true;
+                    return task.text
+                        .toLowerCase()
+                        .includes(searchFilter.toLowerCase());
+                })
                 .filter((task) => {
                     if (priorityFilter === 'all') return true;
                     return task.priority === priorityFilter;
