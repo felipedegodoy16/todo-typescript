@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Task } from './types/Task';
 import TaskList from './components/TaskList.tsx';
 import TaskModal from './components/TaskModal.tsx';
@@ -8,6 +8,10 @@ import { useModal } from './hooks/useModal.ts';
 import Filters from './components/Filters.tsx';
 
 function App() {
+    useEffect(() => {
+        document.title = 'To-Do List • React + Tailwind';
+    }, []);
+
     const [tasks, addTask, removeTask, concludeTask, reOpenTask] = useTasks();
     const [isModalOpen, changeModalState] = useModal();
     const [isInfosModalOpen, changeInfosModalState] = useModal();

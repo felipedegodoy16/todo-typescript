@@ -31,45 +31,114 @@ function Filters({
 
             <div className="grid gap-1">
                 <span>Prioridade</span>
-                <select
-                    className="p-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition-bg duration-200 focus:outline-none focus:border-blue-500 sm:text-sm cursor-pointer"
-                    onChange={(e) => setPriorityFilter(e.target.value)}
-                    name="priorityFilter"
-                    id="priorityFilter"
-                >
-                    <option value="all">Todas</option>
-                    <option value="down">Baixa</option>
-                    <option value="medium">Média</option>
-                    <option value="high">Alta</option>
-                </select>
+                <div className="relative min-w-24">
+                    <select
+                        className="p-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition-bg duration-200 focus:outline-none focus:border-blue-500 sm:text-sm cursor-pointer w-full appearance-none"
+                        onChange={(e) => setPriorityFilter(e.target.value)}
+                        name="priorityFilter"
+                        id="priorityFilter"
+                    >
+                        <option value="all">Todas</option>
+                        <option value="down">Baixa</option>
+                        <option value="medium">Média</option>
+                        <option value="high">Alta</option>
+                    </select>
+                    <span
+                        className="
+                        pointer-events-none
+                        absolute
+                        right-2
+                        top-1/2
+                        -translate-y-1/2
+                        text-gray-500
+                        text-xs
+                    "
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            className="fill-gray-600 transition-transform duration-200"
+                        >
+                            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             <div className="grid gap-1">
                 <span>Status</span>
-                <select
-                    className="p-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition-bg duration-200 focus:outline-none focus:border-blue-500 sm:text-sm cursor-pointer"
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                    name="statusFilter"
-                    id="statusFilter"
-                >
-                    <option value="all">Todas</option>
-                    <option value="open">Abertas</option>
-                    <option value="concluded">Concluídas</option>
-                </select>
+                <div className="relative min-w-24">
+                    <select
+                        className="p-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition-bg duration-200 focus:outline-none focus:border-blue-500 sm:text-sm cursor-pointer w-full appearance-none"
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        name="statusFilter"
+                        id="statusFilter"
+                    >
+                        <option value="all">Todas</option>
+                        <option value="open">Abertas</option>
+                        <option value="concluded">Concluídas</option>
+                    </select>
+                    <span
+                        className="
+                        pointer-events-none
+                        absolute
+                        right-2
+                        top-1/2
+                        -translate-y-1/2
+                        text-gray-500
+                        text-xs
+                    "
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            className="fill-gray-600 transition-transform duration-200"
+                        >
+                            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             <div className="grid gap-1">
                 <span>Vencidas</span>
-                <select
-                    className="p-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition-bg duration-200 focus:outline-none focus:border-blue-500 sm:text-sm cursor-pointer"
-                    onChange={(e) => setOverdueFilter(e.target.value)}
-                    name="overdueFilter"
-                    id="overdueFilter"
-                >
-                    <option value="all">Todas</option>
-                    <option value="overdue">Vencidas</option>
-                    <option value="not-overdue">Não vencidas</option>
-                </select>
+                <div className="relative min-w-24">
+                    <select
+                        className="p-2 border border-gray-300 rounded-md shadow-sm hover:bg-gray-100 transition-bg duration-200 focus:outline-none focus:border-blue-500 sm:text-sm cursor-pointer w-full appearance-none"
+                        onChange={(e) => setOverdueFilter(e.target.value)}
+                        name="overdueFilter"
+                        id="overdueFilter"
+                    >
+                        <option value="all">Todas</option>
+                        <option value="overdue">Vencidas</option>
+                        <option value="not-overdue">Não vencidas</option>
+                    </select>
+                    <span
+                        className="
+                        pointer-events-none
+                        absolute
+                        right-1
+                        top-1/2
+                        -translate-y-1/2
+                        text-gray-500
+                        text-xs
+                    "
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            className="fill-gray-600 transition-transform duration-200"
+                        >
+                            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+                        </svg>
+                    </span>
+                </div>
             </div>
 
             <button
