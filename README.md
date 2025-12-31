@@ -22,9 +22,9 @@ A aplicação faz uso intensivo dos Hooks fundamentais:
 -   **`useState`**: Utilizado para o gerenciamento de estado local complexo, incluindo:
     -   Lista de tarefas (`tasks`).
     -   Estado dos modais (`isModalOpen`, `isInfosModalOpen`).
-    -   Filtros da aplicação (`searchFilter`, `priorityFilter`, `statusFilter`).
--   **`useEffect`**: Aplicado para gerenciar efeitos colaterais, como a atualização dinâmica do título da página baseada no ciclo de vida do componente.
--   **Custom Hooks**: Encapsulamento de lógica reutilizável em hooks como `useTasks` e `useModal`, promovendo código mais limpo e modular.
+    -   Filtros da aplicação (`searchFilter`, `priorityFilter`, `statusFilter`, `overdueFilter`).
+-   **`useEffect`**: Aplicado para gerenciar efeitos colaterais, como a atualização dinâmica do título da página baseada no ciclo de vida do componente e para salvar as tarefas no localStorage.
+-   **Custom Hooks**: Encapsulamento de lógica reutilizável em hooks como `useTasks`, `useLocalStorage` e `useModal`, promovendo código mais limpo e modular.
 
 ### Funcionalidades do Projeto
 
@@ -33,6 +33,7 @@ A aplicação faz uso intensivo dos Hooks fundamentais:
     -   Busca por texto.
     -   Filtro por prioridade.
     -   Filtro por status (concluído/pendente).
+    -   Filtro por tarefas atrasadas.
 -   📱 **Interface Responsiva**: Layout adaptável construído com Tailwind.
 -   🏗️ **Arquitetura Componentizada**: Separação clara de responsabilidades (`TaskList`, `Filters`, Modals).
 
@@ -43,8 +44,8 @@ Siga os passos abaixo para rodar a aplicação localmente:
 1.  **Clone o repositório:**
 
     ```bash
-    git clone <seu-repositorio-url>
-    cd todo-ts
+    git clone https://github.com/felipedegodoy16/todo-typescript
+    cd todo-typescript
     ```
 
 2.  **Instale as dependências:**
