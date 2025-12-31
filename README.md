@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# 📋 Gerenciador de Tarefas (Todo List)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma aplicação moderna de lista de tarefas (Todo List) desenvolvida para consolidar conceitos essenciais e avançados do ecossistema React. O foco principal é a demonstração prática da manipulação de estados, efeitos colaterais e tipagem estática rigorosa, tudo estilizado com a mais recente versão do Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologias e Ferramentas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O projeto utiliza uma stack atualizada e performática:
 
-## React Compiler
+-   **React 19**: Biblioteca UI para construção de interfaces componentizadas.
+-   **TypeScript**: Superconjunto de JavaScript para garantir segurança de tipos e melhor experiência de desenvolvimento.
+-   **Vite**: Build tool de próxima geração para um ambiente de desenvolvimento ultrarrápido.
+-   **Tailwind CSS 4**: Framework CSS utility-first para estilização ágil e responsiva.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📚 Aprendizados e Destaques
 
-## Expanding the ESLint configuration
+Este projeto serve como um excelente material de estudo para os seguintes conceitos:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Hooks do React
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+A aplicação faz uso intensivo dos Hooks fundamentais:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+-   **`useState`**: Utilizado para o gerenciamento de estado local complexo, incluindo:
+    -   Lista de tarefas (`tasks`).
+    -   Estado dos modais (`isModalOpen`, `isInfosModalOpen`).
+    -   Filtros da aplicação (`searchFilter`, `priorityFilter`, `statusFilter`).
+-   **`useEffect`**: Aplicado para gerenciar efeitos colaterais, como a atualização dinâmica do título da página baseada no ciclo de vida do componente.
+-   **Custom Hooks**: Encapsulamento de lógica reutilizável em hooks como `useTasks` e `useModal`, promovendo código mais limpo e modular.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Funcionalidades do Projeto
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+-   ✅ **CRUD de Tarefas**: Criar, Ler, Atualizar e Excluir tarefas.
+-   🔍 **Sistema de Filtros**:
+    -   Busca por texto.
+    -   Filtro por prioridade.
+    -   Filtro por status (concluído/pendente).
+-   📱 **Interface Responsiva**: Layout adaptável construído com Tailwind.
+-   🏗️ **Arquitetura Componentizada**: Separação clara de responsabilidades (`TaskList`, `Filters`, Modals).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Como Executar o Projeto
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Siga os passos abaixo para rodar a aplicação localmente:
+
+1.  **Clone o repositório:**
+
+    ```bash
+    git clone <seu-repositorio-url>
+    cd todo-ts
+    ```
+
+2.  **Instale as dependências:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Execute o servidor de desenvolvimento:**
+
+    ```bash
+    npm run dev
+    ```
+
+4.  O projeto estará acessível em `http://localhost:5173` (ou a porta indicada pelo Vite).
+
+---
+
+Desenvolvido com 💙 para fins de estudo e portfólio.
