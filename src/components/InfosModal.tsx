@@ -8,6 +8,22 @@ interface InfosModalProps {
     task: Task | null;
 }
 
+function parseBRDateTime(dateStr: string) {
+    const [datePart, timePart] = dateStr.split(', ');
+
+    const [day, month, year] = datePart.split('/');
+    const [hour, minute, second] = timePart.split(':');
+
+    return new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        Number(hour),
+        Number(minute),
+        Number(second)
+    );
+}
+
 function InfosModal({
     isOpen,
     onClose,
@@ -36,8 +52,14 @@ function InfosModal({
                     ) : (
                         <span className="w-3 h-3 bg-green-500 rounded-full"></span>
                     )}
+
                     {task.concluded ? (
                         <span className="font-bold line-through text-gray-400">
+                            {task.text}
+                        </span>
+                    ) : task.limitDate &&
+                      parseBRDateTime(task.limitDate) < new Date() ? (
+                        <span className="font-bold text-red-500">
                             {task.text}
                         </span>
                     ) : (
@@ -52,6 +74,17 @@ function InfosModal({
                         Descrição: {task.description}
                     </p>
                     <p className="text-gray-700">Criada em: {task.createdAt}</p>
+                    {task.limitDate &&
+                        (parseBRDateTime(task.limitDate) < new Date() ? (
+                            <p className="text-red-500">
+                                Data limite: {task.limitDate}
+                            </p>
+                        ) : (
+                            <p className="text-gray-700">
+                                Data limite: {task.limitDate}
+                            </p>
+                        ))}
+
                     {task.concluded && (
                         <p className="text-gray-700">
                             Concluída em: {task.concludedAt}

@@ -11,14 +11,20 @@ export function useTasks() {
         text: string,
         description: string,
         priority: string,
-        concluded: boolean
+        limitDate: string | undefined,
+        concluded: boolean,
+        createdAt: string
     ) {
+        const dateLimit = limitDate
+            ? new Date(`${limitDate}T00:00:00`).toLocaleString('pt-BR')
+            : undefined;
         if (id === -1) {
             const newTask: Task = {
                 id: Date.now(),
                 text,
                 description,
                 priority,
+                limitDate: dateLimit,
                 concluded,
                 createdAt: new Date().toLocaleString('pt-BR'),
             };
@@ -30,8 +36,9 @@ export function useTasks() {
                 text,
                 description,
                 priority,
+                limitDate: dateLimit,
                 concluded,
-                createdAt: new Date().toLocaleString('pt-BR'),
+                createdAt,
             };
 
             setTasks(tasks.map((task) => (task.id === id ? newTask : task)));

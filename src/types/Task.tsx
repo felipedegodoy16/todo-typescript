@@ -4,6 +4,7 @@ export interface Task {
     description: string;
     priority: string;
     concluded: boolean;
+    limitDate?: string;
     createdAt: string;
     concludedAt?: string;
 }

@@ -8,9 +8,20 @@ interface TaskModalProps {
         text: string,
         description: string,
         priority: string,
-        concluded: boolean
+        limitDate: string | undefined,
+        concluded: boolean,
+        createdAt: string
     ) => void;
     task: Task | null;
+}
+
+function formatToInputDate(dateString: string | undefined) {
+    if (!dateString) return undefined;
+
+    const datePart = dateString.split(',')[0];
+    const [day, month, year] = datePart.split('/');
+
+    return `${year}-${month}-${day}`;
 }
 
 function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
@@ -19,17 +30,31 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
         task?.description ?? ''
     );
     const [priority, setPriority] = useState<string>(task?.priority ?? 'down');
+    const [limitDate, setLimitDate] = useState<string | undefined>(() => {
+        return formatToInputDate(task?.limitDate);
+    });
     const id = task?.id ?? -1;
     const concluded = task?.concluded ?? false;
+    const createdAt = task?.createdAt ?? '';
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
         if (!text.trim()) return;
+        if (!description.trim()) return;
 
-        onAddTask(id, text, description, priority, concluded);
+        onAddTask(
+            id,
+            text,
+            description,
+            priority,
+            limitDate,
+            concluded,
+            createdAt
+        );
         setText('');
         setDescription('');
+        setLimitDate(undefined);
         setPriority('down');
         onClose();
     }
@@ -48,7 +73,7 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex flex-col mb-2">
-                        <label htmlFor="text">Tarefa</label>
+                        <label htmlFor="text">Tarefa *</label>
                         <input
                             id="text"
                             type="text"
@@ -60,7 +85,7 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
                     </div>
 
                     <div className="flex flex-col mb-2">
-                        <label htmlFor="description">Descrição</label>
+                        <label htmlFor="description">Descrição *</label>
                         <input
                             id="description"
                             type="text"
@@ -116,31 +141,17 @@ function TaskModal({ onClose, onAddTask, task }: TaskModalProps) {
                         </div>
                     </div>
 
-                    {/* <div className="flex gap-2 *:flex-1">
-                        <div className="flex flex-col mb-2">
-                            <label htmlFor="limitDate">Data Limite</label>
-                            <input
-                                id="limitDate"
-                                type="date"
-                                placeholder="Digite a data limite"
-                                value={limitDate}
-                                onChange={(e) => setLimitDate(e.target.value)}
-                                className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-
-                        <div className="flex flex-col mb-2">
-                            <label htmlFor="limitHour">Horário Limite</label>
-                            <input
-                                id="limitHour"
-                                type="time"
-                                placeholder="Digite o horário limite"
-                                value={limitHour}
-                                onChange={(e) => setLimitHour(e.target.value)}
-                                className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                    </div> */}
+                    <div className="flex flex-col mb-2">
+                        <label htmlFor="limitDate">Data Limite</label>
+                        <input
+                            id="limitDate"
+                            type="date"
+                            placeholder="Digite a data limite"
+                            value={limitDate}
+                            onChange={(e) => setLimitDate(e.target.value)}
+                            className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
 
                     <div className="flex justify-end gap-2 mt-4">
                         <button

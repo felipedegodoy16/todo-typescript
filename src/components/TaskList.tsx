@@ -5,6 +5,7 @@ interface TaskListProps {
     searchFilter: string;
     priorityFilter: string;
     statusFilter: string;
+    overdueFilter: string;
     concludeTask: (id: number) => void;
     reOpenTask: (id: number) => void;
     editTask: (task: Task) => void;
@@ -12,11 +13,28 @@ interface TaskListProps {
     openInfosModal: (task: Task) => void;
 }
 
+function parseBRDateTime(dateStr: string) {
+    const [datePart, timePart] = dateStr.split(', ');
+
+    const [day, month, year] = datePart.split('/');
+    const [hour, minute, second] = timePart.split(':');
+
+    return new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        Number(hour),
+        Number(minute),
+        Number(second)
+    );
+}
+
 function TaskList({
     tasks,
     searchFilter,
     priorityFilter,
     statusFilter,
+    overdueFilter,
     concludeTask,
     editTask,
     reOpenTask,
@@ -49,6 +67,18 @@ function TaskList({
                     if (statusFilter === 'concluded') return task.concluded;
                     return !task.concluded;
                 })
+                .filter((task) => {
+                    if (overdueFilter === 'all') return true;
+                    if (overdueFilter === 'overdue')
+                        return (
+                            task.limitDate &&
+                            parseBRDateTime(task.limitDate) < new Date()
+                        );
+                    return (
+                        !task.limitDate ||
+                        parseBRDateTime(task.limitDate) >= new Date()
+                    );
+                })
                 .map((task) => (
                     <li
                         key={task.id}
@@ -74,6 +104,17 @@ function TaskList({
                                             openInfosModal(task);
                                     }}
                                     className="font-bold line-through text-gray-400"
+                                >
+                                    {task.text}
+                                </span>
+                            ) : task.limitDate &&
+                              parseBRDateTime(task.limitDate) < new Date() ? (
+                                <span
+                                    onClick={(e) => {
+                                        if (e.target === e.currentTarget)
+                                            openInfosModal(task);
+                                    }}
+                                    className="font-bold text-red-500"
                                 >
                                     {task.text}
                                 </span>
